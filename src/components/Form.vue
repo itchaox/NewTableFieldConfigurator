@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-25 22:17
+ * @LastTime   : 2024-01-25 23:33
  * @desc       : 
 -->
 
@@ -54,6 +54,7 @@
 
   const handleDelete = (index, id) => {
     methodList.value.splice(index, 1);
+    // filterTableDataList.value.splice(index, 1);
 
     // 检索存储的数据
     const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
@@ -299,6 +300,7 @@
         empty-text="暂无数据"
       >
         <el-table-column
+          v-if="filterTableDataList?.length > 0"
           type="selection"
           width="30"
         />
@@ -365,6 +367,7 @@
 
     <div class="delete-button">
       <el-button
+        v-if="filterTableDataList?.length > 0"
         @click="batchDelete"
         type="danger"
         color="#F54A45"
