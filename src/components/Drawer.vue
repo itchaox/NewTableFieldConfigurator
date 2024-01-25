@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-25 22:27
+ * @LastTime   : 2024-01-25 23:48
  * @desc       : 抽屉
 -->
 
@@ -53,7 +53,7 @@
       type: 4,
     },
     {
-      name: '日期时间',
+      name: '日期',
       type: 5,
     },
     {
@@ -69,7 +69,7 @@
       type: 13,
     },
     {
-      name: '网址',
+      name: '超链接',
       type: 15,
     },
     {
@@ -135,6 +135,57 @@
     {
       name: '评分',
       type: 99004,
+    },
+    {
+      name: '电子邮件',
+      type: 99005,
+    },
+  ]);
+
+  const firstFilterFieldList = ref([
+    {
+      name: '文本',
+      type: 1,
+    },
+    {
+      name: '数字',
+      type: 2,
+    },
+    {
+      name: '日期',
+      type: 5,
+    },
+    {
+      name: '电话',
+      type: 13,
+    },
+    {
+      name: '超链接',
+      type: 15,
+    },
+    {
+      name: '公式',
+      type: 20,
+    },
+    {
+      name: '地理位置',
+      type: 22,
+    },
+    {
+      name: '条码',
+      type: 99001,
+    },
+    {
+      name: '进度',
+      type: 99002,
+    },
+    {
+      name: '货币',
+      type: 99003,
+    },
+    {
+      name: '自动编号',
+      type: 1005,
     },
     {
       name: '电子邮件',
@@ -370,7 +421,7 @@
                   style="width: 50%"
                 >
                   <el-option
-                    v-for="(field, i) in filterFieldList"
+                    v-for="(field, i) in index === 0 ? firstFilterFieldList : filterFieldList"
                     :key="i"
                     :label="field.name"
                     :title="field.name"
