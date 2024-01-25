@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-25 23:48
+ * @LastTime   : 2024-01-25 23:53
  * @desc       : 抽屉
 -->
 
@@ -539,7 +539,6 @@
 
   .collapse-delete {
     padding: 5px;
-    height: 24px;
   }
 
   .sync {
