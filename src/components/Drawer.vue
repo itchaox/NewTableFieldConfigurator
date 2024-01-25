@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-25 22:16
+ * @LastTime   : 2024-01-25 22:27
  * @desc       : 抽屉
 -->
 
@@ -366,6 +366,7 @@
                 <!-- 字段名 -->
                 <el-select
                   v-model="item.type"
+                  filterable
                   style="width: 50%"
                 >
                   <el-option
