@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-30 15:30
+ * @LastTime   : 2024-01-25 22:16
  * @desc       : 抽屉
 -->
 
@@ -324,7 +324,6 @@
         <el-button
           type="danger"
           @click="close"
-          size="small"
         >
           <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
           关闭
@@ -362,28 +361,27 @@
               <div
                 class="collapse-line"
                 v-for="(item, index) in filterList"
-                :key="item.index"
+                :key="index"
               >
                 <!-- 字段名 -->
-                <div class="collapse-line-filed">
-                  <el-select
-                    size="small"
-                    v-model="item.type"
+                <el-select
+                  v-model="item.type"
+                  style="width: 50%"
+                >
+                  <el-option
+                    v-for="(field, i) in filterFieldList"
+                    :key="i"
+                    :label="field.name"
+                    :title="field.name"
+                    :value="field.type"
                   >
-                    <el-option
-                      v-for="(field, index) in filterFieldList"
-                      :key="index"
-                      :label="field.name"
-                      :title="field.name"
-                      :value="field.type"
-                    >
-                      <field-icon :fieldType="field.type" />
-                      <span>
-                        {{ field.name }}
-                      </span>
-                    </el-option>
-                  </el-select>
-                </div>
+                    <field-icon :fieldType="field.type" />
+                    <span>
+                      {{ field.name }}
+                    </span>
+                  </el-option>
+                </el-select>
+
                 <div class="collapse-line-other">
                   <!-- 值 -->
                   <div
@@ -394,7 +392,6 @@
                     <el-input
                       v-model="item.name"
                       :title="item.name"
-                      size="small"
                       placeholder="请输入字段名字"
                     />
                   </div>
@@ -473,7 +470,6 @@
     flex-wrap: nowrap;
     justify-content: space-between;
     margin-bottom: 10px;
-    height: 24px;
   }
 
   .collapse-line-filed {

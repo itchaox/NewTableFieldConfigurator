@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-30 17:38
+ * @LastTime   : 2024-01-25 22:17
  * @desc       : 
 -->
 
@@ -255,7 +255,6 @@
       <el-button
         type="primary"
         @click="addView"
-        size="small"
       >
         <el-icon><Plus /></el-icon>
         <span>新增方案</span>
@@ -276,7 +275,6 @@
     <div class="button">
       <el-button
         type="primary"
-        size="small"
         @click="search"
       >
         <el-icon><Search /></el-icon>
@@ -285,7 +283,6 @@
 
       <el-button
         type="info"
-        size="small"
         @click="reset"
       >
         <el-icon><Refresh /></el-icon>
@@ -332,13 +329,21 @@
                 title="新增数据表"
                 style="color: rgb(20, 86, 240)"
               >
-                <el-icon size="20"><VideoPlay /></el-icon>
+                <el-icon
+                  size="20"
+                  class="cursor"
+                  ><VideoPlay
+                /></el-icon>
               </div>
               <div
                 @click="edit(scope.row)"
                 title="编辑方案"
               >
-                <el-icon size="20"><Edit /></el-icon>
+                <el-icon
+                  size="20"
+                  class="cursor"
+                  ><Edit
+                /></el-icon>
               </div>
 
               <div
@@ -346,7 +351,11 @@
                 title="删除方案"
                 style="color: #f54a45"
               >
-                <el-icon size="20"><Delete /></el-icon>
+                <el-icon
+                  size="20"
+                  class="cursor"
+                  ><Delete
+                /></el-icon>
               </div>
             </div>
           </template>
@@ -358,7 +367,6 @@
       <el-button
         @click="batchDelete"
         type="danger"
-        size="small"
         color="#F54A45"
       >
         <el-icon><Delete /></el-icon>
@@ -383,7 +391,6 @@
         <div class="addView-line-label addView-line-labelDialog">数据表名:</div>
         <el-input
           v-model="addTableName"
-          size="small"
           placeholder="请输入数据表名"
         />
       </div>
@@ -391,14 +398,12 @@
       <div>
         <el-button
           type="primary"
-          size="small"
           @click="confirm"
           >确认</el-button
         >
 
         <el-button
           type="info"
-          size="small"
           @click="cancel"
           >取消</el-button
         >
@@ -445,6 +450,12 @@
 
     div {
       margin-right: 12px;
+    }
+  }
+
+  .cursor {
+    &:hover {
+      cursor: pointer;
     }
   }
 
