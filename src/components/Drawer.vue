@@ -2,17 +2,17 @@
  * @Version    : v1.00
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
- * @LastAuthor : itchaox
- * @LastTime   : 2024-01-25 23:53
+ * @LastAuthor : wangchao
+ * @LastTime   : 2024-01-26 10:07
  * @desc       : 抽屉
 -->
 
 <script setup lang="ts">
-  import { bitable } from '@lark-base-open/js-sdk';
-  import { Close } from '@element-plus/icons-vue';
-  import FieldIcon from './fieldIcon.jsx';
-  import { v4 as uuidv4 } from 'uuid';
-  import { LOCAL_STORAGE_KEY } from '@/config/constant';
+  import { bitable } from "@lark-base-open/js-sdk";
+  import { Close } from "@element-plus/icons-vue";
+  import FieldIcon from "./fieldIcon.jsx";
+  import { v4 as uuidv4 } from "uuid";
+  import { LOCAL_STORAGE_KEY } from "@/config/constant";
 
   const base = bitable.base;
 
@@ -25,7 +25,7 @@
 
   const props = defineProps<Props>();
 
-  const emits = defineEmits(['update:model-value', 'confirmAddView', 'cancelAddView']);
+  const emits = defineEmits(["update:model-value", "confirmAddView", "cancelAddView"]);
 
   let table;
   let view;
@@ -37,43 +37,43 @@
   // FIXME 支持大部分常见字段
   const filterFieldList = ref([
     {
-      name: '文本',
+      name: "文本",
       type: 1,
     },
     {
-      name: '数字',
+      name: "数字",
       type: 2,
     },
     {
-      name: '单选',
+      name: "单选",
       type: 3,
     },
     {
-      name: '多选',
+      name: "多选",
       type: 4,
     },
     {
-      name: '日期',
+      name: "日期",
       type: 5,
     },
     {
-      name: '复选框',
+      name: "复选框",
       type: 7,
     },
     {
-      name: '用户',
+      name: "用户",
       type: 11,
     },
     {
-      name: '电话',
+      name: "电话",
       type: 13,
     },
     {
-      name: '超链接',
+      name: "超链接",
       type: 15,
     },
     {
-      name: '附件',
+      name: "附件",
       type: 17,
     },
     // {
@@ -85,7 +85,7 @@
     //   type: 19,
     // },
     {
-      name: '公式',
+      name: "公式",
       type: 20,
     },
     // {
@@ -93,102 +93,102 @@
     //   type: 21,
     // },
     {
-      name: '位置',
+      name: "位置",
       type: 22,
     },
     {
-      name: '群聊',
+      name: "群聊",
       type: 23,
     },
     {
-      name: '创建时间',
+      name: "创建时间",
       type: 1001,
     },
     {
-      name: '修改时间',
+      name: "修改时间",
       type: 1002,
     },
     {
-      name: '创建用户',
+      name: "创建用户",
       type: 1003,
     },
     {
-      name: '修改用户',
+      name: "修改用户",
       type: 1004,
     },
     {
-      name: '自动编号',
+      name: "自动编号",
       type: 1005,
     },
     {
-      name: '条形码',
+      name: "条形码",
       type: 99001,
     },
     {
-      name: '进度',
+      name: "进度",
       type: 99002,
     },
     {
-      name: '货币',
+      name: "货币",
       type: 99003,
     },
     {
-      name: '评分',
+      name: "评分",
       type: 99004,
     },
     {
-      name: '电子邮件',
+      name: "电子邮件",
       type: 99005,
     },
   ]);
 
   const firstFilterFieldList = ref([
     {
-      name: '文本',
+      name: "文本",
       type: 1,
     },
     {
-      name: '数字',
+      name: "数字",
       type: 2,
     },
     {
-      name: '日期',
+      name: "日期",
       type: 5,
     },
     {
-      name: '电话',
+      name: "电话",
       type: 13,
     },
     {
-      name: '超链接',
+      name: "超链接",
       type: 15,
     },
     {
-      name: '公式',
+      name: "公式",
       type: 20,
     },
     {
-      name: '地理位置',
+      name: "地理位置",
       type: 22,
     },
     {
-      name: '条码',
+      name: "条码",
       type: 99001,
     },
     {
-      name: '进度',
+      name: "进度",
       type: 99002,
     },
     {
-      name: '货币',
+      name: "货币",
       type: 99003,
     },
     {
-      name: '自动编号',
+      name: "自动编号",
       type: 1005,
     },
     {
-      name: '电子邮件',
+      name: "电子邮件",
       type: 99005,
     },
   ]);
@@ -241,8 +241,8 @@
   async function confirmAddView() {
     if (!addMethodName.value) {
       ElMessage({
-        type: 'error',
-        message: '请填写方案名字',
+        type: "error",
+        message: "请填写方案名字",
         duration: 1500,
         showClose: true,
       });
@@ -259,7 +259,7 @@
 
       let item = {
         // 处理 id
-        id: props.drawerStatus === 'add' ? uuidv4() : props.addMethodItem?.id,
+        id: props.drawerStatus === "add" ? uuidv4() : props.addMethodItem?.id,
         name: addMethodName.value,
         list: filterList.value,
       };
@@ -271,7 +271,7 @@
         // 已存在 key
         let retrievedArray = JSON.parse(storedData);
 
-        if (props.drawerStatus === 'add') {
+        if (props.drawerStatus === "add") {
           retrievedArray.push(item);
         } else {
           // 新增则 push 数据, 编辑修改数据
@@ -293,18 +293,18 @@
       }
 
       reset();
-      emits('confirmAddView', item);
+      emits("confirmAddView", item);
 
       ElMessage({
-        type: 'success',
-        message: `${props.drawerStatus === 'add' ? '新增' : '编辑'}成功`,
+        type: "success",
+        message: `${props.drawerStatus === "add" ? "新增" : "编辑"}成功`,
         duration: 1500,
         showClose: true,
       });
     } else {
       ElMessage({
-        type: 'error',
-        message: '方案名字已存在,请重新输入!',
+        type: "error",
+        message: "方案名字已存在,请重新输入!",
         duration: 1500,
         showClose: true,
       });
@@ -316,10 +316,10 @@
   }
 
   function reset() {
-    emits('update:model-value', false);
-    emits('cancelAddView');
+    emits("update:model-value", false);
+    emits("cancelAddView");
 
-    addMethodName.value = '';
+    addMethodName.value = "";
     filterList.value = [];
   }
 
@@ -341,12 +341,12 @@
   const addFilter = () => {
     filterList.value.push({
       type: filterFieldList.value?.[0]?.type,
-      name: '',
+      name: "",
     });
   };
 
   // 折叠面板
-  const collapse = ref('1');
+  const collapse = ref("1");
 </script>
 
 <template>
@@ -447,7 +447,12 @@
                       placeholder="请输入字段名字"
                     />
                   </div>
+                  <div
+                    v-if="index === 0"
+                    class="btn-delete"
+                  ></div>
                   <el-button
+                    v-else
                     :icon="Close"
                     class="collapse-delete"
                     @click="() => filterList.splice(index, 1)"
@@ -506,7 +511,7 @@
   .collapse {
     margin: 20px 0;
     max-height: 60vh;
-    overflow: scroll;
+    /* overflow: scroll; */
   }
 
   .collapse-title {
@@ -535,6 +540,10 @@
 
   .collapse-line-value {
     margin: 0 5px;
+  }
+
+  .btn-delete {
+    width: 25px;
   }
 
   .collapse-delete {
