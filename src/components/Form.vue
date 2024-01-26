@@ -2,21 +2,21 @@
  * @Version    : v1.00
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
- * @LastAuthor : wangchao
- * @LastTime   : 2024-01-26 10:38
+ * @LastAuthor : itchaox
+ * @LastTime   : 2024-01-26 17:53
  * @desc       : 
 -->
 
 <script setup lang="ts">
-  import { bitable } from "@lark-base-open/js-sdk";
-  import Drawer from "./Drawer.vue";
-  import { LOCAL_STORAGE_KEY } from "@/config/constant";
+  import { bitable } from '@lark-base-open/js-sdk';
+  import Drawer from './Drawer.vue';
+  import { LOCAL_STORAGE_KEY } from '@/config/constant';
 
   // 新增视图抽屉
   const addViewDrawer = ref(false);
 
   async function addView() {
-    drawerStatus.value = "add";
+    drawerStatus.value = 'add';
     addViewDrawer.value = true;
   }
 
@@ -51,7 +51,7 @@
   const confirmAddView = (item) => {
     // getData();
 
-    if (drawerStatus.value === "add") {
+    if (drawerStatus.value === 'add') {
       // methodList.value.push(item);
       filterTableDataList.value.push(item);
     } else {
@@ -67,7 +67,7 @@
   };
 
   function cancelAddView() {
-    addMethodItem.value = "";
+    addMethodItem.value = '';
   }
 
   const handleDelete = (index, id) => {
@@ -89,8 +89,8 @@
     }
 
     ElMessage({
-      type: "success",
-      message: "删除成功",
+      type: 'success',
+      message: '删除成功',
       duration: 1500,
       showClose: true,
     });
@@ -116,7 +116,7 @@
 
   async function edit(item) {
     addMethodItem.value = item;
-    drawerStatus.value = "edit";
+    drawerStatus.value = 'edit';
     addViewDrawer.value = true;
   }
 
@@ -125,8 +125,8 @@
 
     if (selectList.value.length === 0) {
       ElMessage({
-        type: "warning",
-        message: "请选择删除的方案!",
+        type: 'warning',
+        message: '请选择删除的方案!',
         duration: 1500,
         showClose: true,
       });
@@ -142,8 +142,8 @@
     localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(difference));
 
     ElMessage({
-      type: "success",
-      message: "批量删除成功",
+      type: 'success',
+      message: '批量删除成功',
       duration: 1500,
       showClose: true,
     });
@@ -153,8 +153,8 @@
   async function confirm() {
     if (!addTableName.value) {
       ElMessage({
-        type: "error",
-        message: "请填写数据表名字",
+        type: 'error',
+        message: '请填写数据表名字',
         duration: 1500,
         showClose: true,
       });
@@ -194,8 +194,8 @@
       });
 
       ElMessage({
-        type: "success",
-        message: "新增数据表成功",
+        type: 'success',
+        message: '新增数据表成功',
         duration: 1500,
         showClose: true,
       });
@@ -216,11 +216,11 @@
         await table.addField({ type: item.type, name: item.name });
       }
 
-      addTableName.value = "";
+      addTableName.value = '';
     } else {
       ElMessage({
-        type: "error",
-        message: "数据表名字已存在,请重新输入!",
+        type: 'error',
+        message: '数据表名字已存在,请重新输入!',
         duration: 1500,
         showClose: true,
       });
@@ -229,12 +229,12 @@
 
   function cancel() {
     isAddTable.value = false;
-    addTableName.value = "";
+    addTableName.value = '';
   }
 
-  const drawerStatus = ref("add");
+  const drawerStatus = ref('add');
 
-  const methodName = ref("");
+  const methodName = ref('');
 
   const filterTableDataList = ref();
 
@@ -250,15 +250,15 @@
     });
 
     ElMessage({
-      type: "success",
-      message: "查询成功",
+      type: 'success',
+      message: '查询成功',
       duration: 1500,
       showClose: true,
     });
   }
 
   function reset() {
-    methodName.value = "";
+    methodName.value = '';
     filterTableDataList.value = methodList.value;
   }
 </script>
@@ -323,7 +323,7 @@
         empty-text="暂无数据"
       >
         <el-table-column
-          v-if="filterTableDataList?.length > 0"
+          v-show="filterTableDataList?.length > 0"
           type="selection"
           width="30"
         />
@@ -333,14 +333,12 @@
           :min-width="120"
         >
           <template #default="scope">
-            <div
-              :title="scope.row.name"
-              class="view-name"
-            >
+            <div :title="scope.row.name">
               <div>{{ scope.row.name }}</div>
             </div>
           </template>
         </el-table-column>
+
         <el-table-column
           property="name"
           label="操作"
