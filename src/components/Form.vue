@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-26 17:53
+ * @LastTime   : 2024-01-26 18:08
  * @desc       : 
 -->
 
@@ -264,18 +264,18 @@
 </script>
 
 <template>
-  <div class="tip">
+  <!-- <div class="tip">
     <div class="tip-text tip-title">操作步骤:</div>
     <div class="tip-text">1. 新增方案: 配置方案名字和字段列表信息</div>
     <div class="tip-text">2. 点击"运行"按钮，输入表名，生成对应方案数据表</div>
     <div class="tip-text">3. 点击"编辑"按钮，修改选定方案名称和字段列表</div>
-  </div>
+  </div> -->
 
   <div
     v-loading="loading"
     element-loading-text="加载中..."
   >
-    <div class="button">
+    <div class="button mt0">
       <el-button
         type="primary"
         @click="addView"
@@ -315,6 +315,16 @@
     </div>
 
     <div class="view-table">
+      <div
+        class="total-text"
+        v-if="filterTableDataList?.length >= 1"
+      >
+        总数: {{ filterTableDataList?.length }} 个
+      </div>
+      <!-- <div
+        v-show="loading"
+        class="total-text"
+      ></div> -->
       <el-table
         ref="tableRef"
         @selection-change="handleSelectionChange"
@@ -386,6 +396,13 @@
       </el-table>
     </div>
 
+    <div
+      class="select-text"
+      v-if="filterTableDataList?.length >= 1"
+    >
+      已选: {{ selectList?.length }} 个
+    </div>
+
     <div class="delete-button">
       <el-button
         v-if="filterTableDataList?.length > 0"
@@ -451,7 +468,7 @@
   }
 
   .delete-button {
-    margin-top: 20px;
+    margin-top: 10px;
   }
 
   .addView {
@@ -503,5 +520,22 @@
 
   .button {
     margin: 14px 0;
+  }
+
+  .mt0 {
+    margin-top: 5px !important;
+  }
+
+  .total-text {
+    height: 14px;
+    line-height: 14px;
+    font-size: 14px;
+  }
+
+  .select-text {
+    margin-top: 5px;
+    font-size: 14px;
+    height: 14px;
+    line-height: 14px;
   }
 </style>
