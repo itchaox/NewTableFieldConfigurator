@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : wangchao
- * @LastTime   : 2024-01-26 10:02
+ * @LastTime   : 2024-01-26 10:38
  * @desc       : 
 -->
 
@@ -21,6 +21,22 @@
   }
 
   onMounted(() => {
+    // // 检索存储的数据
+    // const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+    // if (storedData) {
+    //   // 已存在 key
+    //   const retrievedArray = JSON.parse(storedData);
+    //   methodList.value = retrievedArray;
+    //   filterTableDataList.value = retrievedArray;
+    // }
+
+    getData();
+  });
+
+  const methodList = ref([]);
+
+  function getData() {
     // 检索存储的数据
     const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
 
@@ -30,16 +46,18 @@
       methodList.value = retrievedArray;
       filterTableDataList.value = retrievedArray;
     }
-  });
-
-  const methodList = ref([]);
+  }
 
   const confirmAddView = (item) => {
+    // getData();
+
     if (drawerStatus.value === "add") {
-      methodList.value.push(item);
+      // methodList.value.push(item);
+      filterTableDataList.value.push(item);
     } else {
       // 新增则 push 数据, 编辑修改数据
-      methodList.value = methodList.value.map((_item) => {
+      // methodList.value = methodList.value.map((_item) => {
+      filterTableDataList.value = filterTableDataList.value.map((_item) => {
         if (_item.id === item.id) {
           _item = item;
         }
@@ -53,6 +71,8 @@
   }
 
   const handleDelete = (index, id) => {
+    getData();
+
     methodList.value.splice(index, 1);
     // filterTableDataList.value.splice(index, 1);
 
@@ -86,6 +106,7 @@
   const addTableName = ref();
 
   const activeItem = ref();
+
   async function use(item) {
     isAddTable.value = true;
     activeItem.value = item;
@@ -100,6 +121,8 @@
   }
 
   function batchDelete() {
+    getData();
+
     if (selectList.value.length === 0) {
       ElMessage({
         type: "warning",
@@ -153,7 +176,7 @@
 
       const table = await bitable.base.getTableById(tableId);
       let _list = [];
-      for (let i = 0; i < 10; i++) {
+      for (let i = 0; i < activeItem.value.lineNumber; i++) {
         _list.push({
           fields: {},
         });

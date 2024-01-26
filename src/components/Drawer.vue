@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : wangchao
- * @LastTime   : 2024-01-26 10:07
+ * @LastTime   : 2024-01-26 10:38
  * @desc       : 抽屉
 -->
 
@@ -262,6 +262,7 @@
         id: props.drawerStatus === "add" ? uuidv4() : props.addMethodItem?.id,
         name: addMethodName.value,
         list: filterList.value,
+        lineNumber: lineNumber.value,
       };
 
       // 检索存储的数据
@@ -326,10 +327,13 @@
   // FIXME 筛选
   const filterList = ref([]);
 
+  const lineNumber = ref(10);
+
   watch(
     () => props.addMethodItem,
     (newValue, oldValue) => {
       addMethodName.value = newValue?.name;
+      lineNumber.value = newValue?.lineNumber || 10;
       filterList.value = newValue?.list || [];
     },
     {
@@ -470,6 +474,15 @@
           </el-collapse-item>
         </el-collapse>
 
+        <div class="default-line">
+          <div>默认行数：</div>
+          <el-input-number
+            v-model="lineNumber"
+            :min="1"
+            :max="1000"
+          />
+        </div>
+
         <div>
           <el-button
             type="primary"
@@ -563,5 +576,11 @@
   .view-name-icon {
     position: relative;
     top: 2px;
+  }
+
+  .default-line {
+    display: flex;
+    align-items: center;
+    margin-bottom: 24px;
   }
 </style>
