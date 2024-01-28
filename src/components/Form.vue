@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-26 18:08
+ * @LastTime   : 2024-01-28 22:27
  * @desc       : 
 -->
 
@@ -19,6 +19,9 @@
     drawerStatus.value = 'add';
     addViewDrawer.value = true;
   }
+
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
 
   onMounted(() => {
     // // 检索存储的数据
@@ -90,7 +93,7 @@
 
     ElMessage({
       type: 'success',
-      message: '删除成功',
+      message: t('Deleted successfully'),
       duration: 1500,
       showClose: true,
     });
@@ -126,7 +129,7 @@
     if (selectList.value.length === 0) {
       ElMessage({
         type: 'warning',
-        message: '请选择删除的方案!',
+        message: t('Please select the option to delete'),
         duration: 1500,
         showClose: true,
       });
@@ -143,7 +146,7 @@
 
     ElMessage({
       type: 'success',
-      message: '批量删除成功',
+      message: t('Batch Delete Success'),
       duration: 1500,
       showClose: true,
     });
@@ -154,7 +157,7 @@
     if (!addTableName.value) {
       ElMessage({
         type: 'error',
-        message: '请填写数据表名字',
+        message: t('Please fill in the name of the data sheet'),
         duration: 1500,
         showClose: true,
       });
@@ -195,7 +198,7 @@
 
       ElMessage({
         type: 'success',
-        message: '新增数据表成功',
+        message: t('New data table added successfully'),
         duration: 1500,
         showClose: true,
       });
@@ -220,7 +223,7 @@
     } else {
       ElMessage({
         type: 'error',
-        message: '数据表名字已存在,请重新输入!',
+        message: t('ta'),
         duration: 1500,
         showClose: true,
       });
@@ -251,7 +254,7 @@
 
     ElMessage({
       type: 'success',
-      message: '查询成功',
+      message: t('Successful query'),
       duration: 1500,
       showClose: true,
     });
@@ -281,17 +284,17 @@
         @click="addView"
       >
         <el-icon><Plus /></el-icon>
-        <span>新增方案</span>
+        <span>{{ $t('Additional Programs') }}</span>
       </el-button>
     </div>
 
     <div class="addView-line">
-      <div class="addView-line-label">方案名字:</div>
+      <div class="addView-line-label">{{ $t('Program Name') }}</div>
       <el-input
         style="width: 60%"
         v-model="methodName"
         clearable
-        placeholder="请输入方案名字"
+        :placeholder="$t('Please enter the name of the program')"
         @keydown.enter="search"
       />
     </div>
@@ -302,7 +305,7 @@
         @click="search"
       >
         <el-icon><Search /></el-icon>
-        <span>查询</span>
+        <span>{{ $t('search') }}</span>
       </el-button>
 
       <el-button
@@ -310,7 +313,7 @@
         @click="reset"
       >
         <el-icon><Refresh /></el-icon>
-        <span>重置</span>
+        <span>{{ $t('rs') }}</span>
       </el-button>
     </div>
 
@@ -319,7 +322,7 @@
         class="total-text"
         v-if="filterTableDataList?.length >= 1"
       >
-        总数: {{ filterTableDataList?.length }} 个
+        {{ $t('zong-shu-filtertabledatalistlength-ge', [filterTableDataList?.length]) }}
       </div>
       <!-- <div
         v-show="loading"
@@ -339,7 +342,7 @@
         />
 
         <el-table-column
-          label="方案名字"
+          :label="$t('Program name')"
           :min-width="120"
         >
           <template #default="scope">
@@ -351,7 +354,7 @@
 
         <el-table-column
           property="name"
-          label="操作"
+          :label="$t('operation')"
           align="center"
           width="100"
         >
@@ -359,7 +362,7 @@
             <div class="operation">
               <div
                 @click="use(scope.row)"
-                title="新增数据表"
+                :title="$t('Add Data Sheet')"
                 style="color: rgb(20, 86, 240)"
               >
                 <el-icon
@@ -370,7 +373,7 @@
               </div>
               <div
                 @click="edit(scope.row)"
-                title="编辑方案"
+                :title="$t('Editorial program')"
               >
                 <el-icon
                   size="20"
@@ -381,7 +384,7 @@
 
               <div
                 @click="handleDelete(scope.$index, scope.row.id)"
-                title="删除方案"
+                :title="$t('Delete program')"
                 style="color: #f54a45"
               >
                 <el-icon
@@ -400,7 +403,7 @@
       class="select-text"
       v-if="filterTableDataList?.length >= 1"
     >
-      已选: {{ selectList?.length }} 个
+      {{ $t('yi-xuan-selectlistlength-ge', [selectList?.length]) }}
     </div>
 
     <div class="delete-button">
@@ -411,7 +414,7 @@
         color="#F54A45"
       >
         <el-icon><Delete /></el-icon>
-        <span>批量删除</span>
+        <span>{{ $t('batch deletion') }}</span>
       </el-button>
     </div>
   </div>
@@ -421,18 +424,19 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     @close="cancel"
-    title="新增数据表"
+    :title="$t('Add Data Sheet')"
     width="75%"
   >
     <div class="addView">
       <div class="addView-line">
-        当前方案：<span style="color: rgb(20, 86, 240); font-weight: 500"> {{ activeItem.name }}</span>
+        {{ $t('Current Programs')
+        }}<span style="color: rgb(20, 86, 240); font-weight: 500"> {{ activeItem.name }}</span>
       </div>
       <div class="addView-line">
-        <div class="addView-line-label addView-line-labelDialog">数据表名:</div>
+        <div class="addView-line-label addView-line-labelDialog">{{ $t('data table name') }}</div>
         <el-input
           v-model="addTableName"
-          placeholder="请输入数据表名"
+          :placeholder="$t('Please enter a data table name')"
         />
       </div>
 
@@ -440,13 +444,13 @@
         <el-button
           type="primary"
           @click="confirm"
-          >确认</el-button
+          >{{ $t('confirm') }}</el-button
         >
 
         <el-button
           type="info"
           @click="cancel"
-          >取消</el-button
+          >{{ $t('cancel') }}</el-button
         >
       </div>
     </div>
