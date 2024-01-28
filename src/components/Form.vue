@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-28 22:27
+ * @LastTime   : 2024-01-28 23:04
  * @desc       : 
 -->
 
@@ -333,7 +333,7 @@
         @selection-change="handleSelectionChange"
         :data="filterTableDataList"
         height="100%"
-        empty-text="暂无数据"
+        :empty-text="$t('No Data')"
       >
         <el-table-column
           v-show="filterTableDataList?.length > 0"

@@ -2,19 +2,22 @@
  * @Version    : v1.00
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
- * @LastAuthor : wangchao
- * @LastTime   : 2024-01-26 10:38
+ * @LastAuthor : itchaox
+ * @LastTime   : 2024-01-28 23:03
  * @desc       : 抽屉
 -->
 
 <script setup lang="ts">
-  import { bitable } from "@lark-base-open/js-sdk";
-  import { Close } from "@element-plus/icons-vue";
-  import FieldIcon from "./fieldIcon.jsx";
-  import { v4 as uuidv4 } from "uuid";
-  import { LOCAL_STORAGE_KEY } from "@/config/constant";
+  import { bitable } from '@lark-base-open/js-sdk';
+  import { Close } from '@element-plus/icons-vue';
+  import FieldIcon from './fieldIcon.jsx';
+  import { v4 as uuidv4 } from 'uuid';
+  import { LOCAL_STORAGE_KEY } from '@/config/constant';
 
   const base = bitable.base;
+
+  import { useI18n } from 'vue-i18n';
+  const { t } = useI18n();
 
   interface Props {
     modelValue: Boolean;
@@ -25,7 +28,7 @@
 
   const props = defineProps<Props>();
 
-  const emits = defineEmits(["update:model-value", "confirmAddView", "cancelAddView"]);
+  const emits = defineEmits(['update:model-value', 'confirmAddView', 'cancelAddView']);
 
   let table;
   let view;
@@ -37,158 +40,146 @@
   // FIXME 支持大部分常见字段
   const filterFieldList = ref([
     {
-      name: "文本",
+      name: 'Text',
       type: 1,
     },
     {
-      name: "数字",
+      name: 'Number',
       type: 2,
     },
     {
-      name: "单选",
+      name: 'single',
       type: 3,
     },
     {
-      name: "多选",
+      name: 'multiple',
       type: 4,
     },
     {
-      name: "日期",
+      name: 'date',
       type: 5,
     },
     {
-      name: "复选框",
+      name: 'checkbox',
       type: 7,
     },
     {
-      name: "用户",
+      name: 'User',
       type: 11,
     },
     {
-      name: "电话",
+      name: 'Phone',
       type: 13,
     },
     {
-      name: "超链接",
+      name: 'Url',
       type: 15,
     },
     {
-      name: "附件",
+      name: 'attachment',
       type: 17,
     },
-    // {
-    //   name: '单链接',
-    //   type: 18,
-    // },
-    // {
-    //   name: '查找',
-    //   type: 19,
-    // },
     {
-      name: "公式",
+      name: 'formula',
       type: 20,
     },
-    // {
-    //   name: '双向链接',
-    //   type: 21,
-    // },
     {
-      name: "位置",
+      name: 'location',
       type: 22,
     },
     {
-      name: "群聊",
+      name: 'group chat',
       type: 23,
     },
     {
-      name: "创建时间",
+      name: 'Creation time',
       type: 1001,
     },
     {
-      name: "修改时间",
+      name: 'Modify Time',
       type: 1002,
     },
     {
-      name: "创建用户",
+      name: 'Create User',
       type: 1003,
     },
     {
-      name: "修改用户",
+      name: 'Modify User',
       type: 1004,
     },
     {
-      name: "自动编号",
+      name: 'auto-numbering',
       type: 1005,
     },
     {
-      name: "条形码",
+      name: 'barcodes',
       type: 99001,
     },
     {
-      name: "进度",
+      name: 'speed',
       type: 99002,
     },
     {
-      name: "货币",
+      name: 'money',
       type: 99003,
     },
     {
-      name: "评分",
+      name: 'score',
       type: 99004,
     },
     {
-      name: "电子邮件",
+      name: 'Email',
       type: 99005,
     },
   ]);
 
   const firstFilterFieldList = ref([
     {
-      name: "文本",
+      name: 'Text',
       type: 1,
     },
     {
-      name: "数字",
+      name: 'Number',
       type: 2,
     },
     {
-      name: "日期",
+      name: 'date',
       type: 5,
     },
     {
-      name: "电话",
+      name: 'Phone',
       type: 13,
     },
     {
-      name: "超链接",
+      name: 'Url',
       type: 15,
     },
     {
-      name: "公式",
+      name: 'formula',
       type: 20,
     },
     {
-      name: "地理位置",
+      name: 'location',
       type: 22,
     },
     {
-      name: "条码",
+      name: 'barcodes',
       type: 99001,
     },
     {
-      name: "进度",
+      name: 'speed',
       type: 99002,
     },
     {
-      name: "货币",
+      name: 'money',
       type: 99003,
     },
     {
-      name: "自动编号",
+      name: 'auto-numbering',
       type: 1005,
     },
     {
-      name: "电子邮件",
+      name: 'Email',
       type: 99005,
     },
   ]);
@@ -241,8 +232,8 @@
   async function confirmAddView() {
     if (!addMethodName.value) {
       ElMessage({
-        type: "error",
-        message: "请填写方案名字",
+        type: 'error',
+        message: t('Please fill in the name of the program'),
         duration: 1500,
         showClose: true,
       });
@@ -259,7 +250,7 @@
 
       let item = {
         // 处理 id
-        id: props.drawerStatus === "add" ? uuidv4() : props.addMethodItem?.id,
+        id: props.drawerStatus === 'add' ? uuidv4() : props.addMethodItem?.id,
         name: addMethodName.value,
         list: filterList.value,
         lineNumber: lineNumber.value,
@@ -272,7 +263,7 @@
         // 已存在 key
         let retrievedArray = JSON.parse(storedData);
 
-        if (props.drawerStatus === "add") {
+        if (props.drawerStatus === 'add') {
           retrievedArray.push(item);
         } else {
           // 新增则 push 数据, 编辑修改数据
@@ -294,18 +285,18 @@
       }
 
       reset();
-      emits("confirmAddView", item);
+      emits('confirmAddView', item);
 
       ElMessage({
-        type: "success",
-        message: `${props.drawerStatus === "add" ? "新增" : "编辑"}成功`,
+        type: 'success',
+        message: `${props.drawerStatus === 'add' ? t('Added successfully') : t('Edit Success')}`,
         duration: 1500,
         showClose: true,
       });
     } else {
       ElMessage({
-        type: "error",
-        message: "方案名字已存在,请重新输入!",
+        type: 'error',
+        message: t('Program name already exis'),
         duration: 1500,
         showClose: true,
       });
@@ -317,10 +308,10 @@
   }
 
   function reset() {
-    emits("update:model-value", false);
-    emits("cancelAddView");
+    emits('update:model-value', false);
+    emits('cancelAddView');
 
-    addMethodName.value = "";
+    addMethodName.value = '';
     filterList.value = [];
   }
 
@@ -345,12 +336,12 @@
   const addFilter = () => {
     filterList.value.push({
       type: filterFieldList.value?.[0]?.type,
-      name: "",
+      name: '',
     });
   };
 
   // 折叠面板
-  const collapse = ref("1");
+  const collapse = ref('1');
 </script>
 
 <template>
@@ -368,31 +359,31 @@
           :id="titleId"
           v-if="drawerStatus === 'add'"
         >
-          新增方案
+          {{ $t('Additional Programs') }}
         </div>
         <div
           :id="titleId"
           v-else
         >
-          编辑方案
+          {{ $t('Editorial program') }}
         </div>
         <el-button
           type="danger"
           @click="close"
         >
           <el-icon class="el-icon--left"><CircleCloseFilled /></el-icon>
-          关闭
+          {{ $t('Close') }}
         </el-button>
       </template>
 
       <div class="addView">
         <div class="addView-line">
-          <div class="addView-line-label theme-view-text-color">方案名字:</div>
+          <div class="addView-line-label theme-view-text-color">{{ $t('Program Name') }}</div>
           <el-input
             style="width: 60%"
             clearable
             v-model="addMethodName"
-            placeholder="请输入方案名字"
+            :placeholder="$t('Please enter the name of the program')"
           />
         </div>
 
@@ -404,7 +395,7 @@
           <el-collapse-item name="1">
             <template #title>
               <el-icon><Filter /></el-icon>
-              <span class="collapse-title">配置字段信息</span>
+              <span class="collapse-title">{{ $t('Configuring field information') }}</span>
               <span
                 v-if="filterList?.length > 0"
                 style="color: #5c82f3"
@@ -427,13 +418,13 @@
                   <el-option
                     v-for="(field, i) in index === 0 ? firstFilterFieldList : filterFieldList"
                     :key="i"
-                    :label="field.name"
+                    :label="$t(field.name)"
                     :title="field.name"
                     :value="field.type"
                   >
                     <field-icon :fieldType="field.type" />
                     <span>
-                      {{ field.name }}
+                      {{ $t(field.name) }}
                     </span>
                   </el-option>
                 </el-select>
@@ -448,7 +439,7 @@
                     <el-input
                       v-model="item.name"
                       :title="item.name"
-                      placeholder="请输入字段名字"
+                      :placeholder="$t('Please enter a field name')"
                     />
                   </div>
                   <div
@@ -469,13 +460,13 @@
               text
               @click="addFilter"
             >
-              <el-icon><Plus /></el-icon>添加字段
+              <el-icon style="margin-right: 5px"><Plus /></el-icon>{{ $t('Adding Fields') }}
             </el-button>
           </el-collapse-item>
         </el-collapse>
 
         <div class="default-line">
-          <div>默认行数：</div>
+          <div>{{ $t('Default number of rows') }}</div>
           <el-input-number
             v-model="lineNumber"
             :min="1"
@@ -487,13 +478,13 @@
           <el-button
             type="primary"
             @click="confirmAddView"
-            >确定</el-button
+            >{{ $t('confirm') }}</el-button
           >
 
           <el-button
             type="info"
             @click="cancel"
-            >取消</el-button
+            >{{ $t('cancel') }}</el-button
           >
         </div>
       </div>
