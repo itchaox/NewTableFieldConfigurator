@@ -3,13 +3,15 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-30 23:37
+ * @LastTime   : 2024-01-30 23:57
  * @desc       : 
 -->
 
 <script setup lang="ts">
   import { bitable } from '@lark-base-open/js-sdk';
   import Drawer from './Drawer.vue';
+  import { InfoFilled } from '@element-plus/icons-vue';
+
   import { LOCAL_STORAGE_KEY } from '@/config/constant';
 
   import { Save } from '@icon-park/vue-next';
@@ -127,9 +129,9 @@
     addViewDrawer.value = true;
   }
 
-  function batchDelete() {
-    getData();
+  const popconfirmVisible = ref(false);
 
+  function batchDelete() {
     if (selectList.value.length === 0) {
       ElMessage({
         type: 'warning',
@@ -139,6 +141,12 @@
       });
       return;
     }
+
+    popconfirmVisible.value = true;
+  }
+
+  function confirmBatchDelete() {
+    getData();
 
     const difference = methodList.value.filter((method) => !selectList.value.some((select) => select.id === method.id));
 
@@ -154,6 +162,8 @@
       duration: 1500,
       showClose: true,
     });
+
+    popconfirmVisible.value = false;
   }
 
   const loading = ref(false);
@@ -509,15 +519,41 @@
     </div>
 
     <div class="delete-button">
-      <el-button
-        v-if="filterTableDataList?.length > 0"
+      <!-- <el-button
         @click="batchDelete"
         type="danger"
         color="#F54A45"
       >
         <el-icon><Delete /></el-icon>
         <span>{{ $t('batch deletion') }}</span>
-      </el-button>
+      </el-button> -->
+
+      <el-popconfirm
+        v-if="filterTableDataList?.length > 0"
+        :visible.sync="popconfirmVisible"
+        width="60vw"
+        :confirm-button-text="$t('confirm')"
+        :cancel-button-text="$t('cancel')"
+        @confirm="confirmBatchDelete"
+        @cancel="() => (popconfirmVisible = false)"
+        :icon="InfoFilled"
+        icon-color="rgb(20, 86, 240)"
+        cancel-button-type="info"
+        :hide-after="50"
+        :title="$t('Confirm deletion of the selected', [selectList.length])"
+      >
+        <template #reference>
+          <el-button
+            @mousedown="(e) => e.preventDefault()"
+            @click="batchDelete"
+            type="danger"
+            color="#F54A45"
+          >
+            <el-icon><Delete /></el-icon>
+            <span>{{ $t('batch deletion') }}</span>
+          </el-button>
+        </template>
+      </el-popconfirm>
     </div>
   </div>
 

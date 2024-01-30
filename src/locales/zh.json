@@ -58,5 +58,6 @@
   "money": "货币",
   "score": "评分",
   "Email": "电子邮件",
-  "No Data": "暂无数据"
+  "No Data": "暂无数据",
+  "Confirm deletion of the selected": "确认删除所选的 {0} 个方案吗?"
 }

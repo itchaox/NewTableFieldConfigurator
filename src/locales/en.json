@@ -56,5 +56,6 @@
   "money": "Money",
   "score": "Score",
   "Email": "Email",
-  "No Data": "No Data"
+  "No Data": "No Data",
+  "Confirm deletion of the selected": "Confirm deletion of the selected {0} size methods?"
 }
