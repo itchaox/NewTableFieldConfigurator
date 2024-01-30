@@ -58,5 +58,6 @@
   "Email": "Email",
   "No Data": "No Data",
   "Confirm deletion of the selected": "Confirm deletion of the selected {0} size methods?",
-  "Save Current View Field Scheme": "Save Current View Field Program"
+  "Save Current View Field Scheme": "Save Current View Field Program",
+  "Please add a list of fields": "Please add a list of fields"
 }

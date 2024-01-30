@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-30 23:38
+ * @LastTime   : 2024-01-31 00:19
  * @desc       : 抽屉
 -->
 
@@ -15,6 +15,8 @@
   import { LOCAL_STORAGE_KEY } from '@/config/constant';
 
   const base = bitable.base;
+
+  import _ from 'lodash';
 
   import { useI18n } from 'vue-i18n';
   const { t } = useI18n();
@@ -240,6 +242,16 @@
       return;
     }
 
+    if (filterList.value.length === 0) {
+      ElMessage({
+        type: 'error',
+        message: t('Please add a list of fields'),
+        duration: 1500,
+        showClose: true,
+      });
+      return;
+    }
+
     const index = props.methodList
       .filter((i) => i.name !== props.addMethodItem?.name)
       .findIndex((item) => item.name === addMethodName.value);
@@ -325,7 +337,7 @@
     (newValue, oldValue) => {
       addMethodName.value = newValue?.name;
       lineNumber.value = newValue?.lineNumber || 10;
-      filterList.value = newValue?.list || [];
+      filterList.value = _.cloneDeep(newValue?.list) || [];
     },
     {
       immediate: true,
@@ -356,12 +368,14 @@
     >
       <template #header="{ close, titleId }">
         <div
+          class="drawer-title"
           :id="titleId"
           v-if="drawerStatus === 'add'"
         >
           {{ $t('Additional Programs') }}
         </div>
         <div
+          class="drawer-title"
           :id="titleId"
           v-else
         >
@@ -573,5 +587,11 @@
     display: flex;
     align-items: center;
     margin-bottom: 24px;
+  }
+
+  .drawer-title {
+    color: rgb(20, 86, 240);
+    font-weight: 500;
+    font-size: 18px;
   }
 </style>

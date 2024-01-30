@@ -60,5 +60,6 @@
   "Email": "电子邮件",
   "No Data": "暂无数据",
   "Confirm deletion of the selected": "确认删除所选的 {0} 个方案吗?",
-  "Save Current View Field Scheme": "保存当前视图字段方案"
+  "Save Current View Field Scheme": "保存当前视图字段方案",
+  "Please add a list of fields": "请添加字段列表"
 }
