@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-28 23:04
+ * @LastTime   : 2024-01-30 23:37
  * @desc       : 
 -->
 
@@ -11,6 +11,10 @@
   import { bitable } from '@lark-base-open/js-sdk';
   import Drawer from './Drawer.vue';
   import { LOCAL_STORAGE_KEY } from '@/config/constant';
+
+  import { Save } from '@icon-park/vue-next';
+
+  import { v4 as uuidv4 } from 'uuid';
 
   // 新增视图抽屉
   const addViewDrawer = ref(false);
@@ -264,6 +268,92 @@
     methodName.value = '';
     filterTableDataList.value = methodList.value;
   }
+
+  const isSaveMethod = ref(false);
+
+  const newMethodName = ref('');
+
+  let supportedFieldList = [
+    1, 2, 3, 4, 5, 7, 11, 13, 15, 17, 20, 22, 23, 1001, 1002, 1003, 1004, 1005, 99001, 99002, 99003, 99004, 99005,
+  ];
+
+  async function confirmSave() {
+    if (!newMethodName.value) {
+      ElMessage({
+        type: 'error',
+        message: t('Please fill in the name of the program'),
+        duration: 1500,
+        showClose: true,
+      });
+      return;
+    }
+
+    const table = await bitable.base.getActiveTable();
+    const view = await table.getActiveView();
+    const fieldMetaList = await view.getFieldMetaList();
+
+    // FIXME 获取当前视图所有字段, 查找引用等不支持的字段使用文本字段替代
+    const _list = fieldMetaList.map((item) => ({
+      type: supportedFieldList.includes(item.type) ? item.type : 1,
+      name: item.name,
+    }));
+
+    const index = methodList.value.findIndex((item) => item.name === newMethodName.value);
+    if (index === -1) {
+      let item = {
+        // 处理 id
+        id: uuidv4(),
+        name: newMethodName.value,
+        list: _list,
+        lineNumber: 10,
+      };
+
+      // 检索存储的数据
+      const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+      if (storedData) {
+        // 已存在 key
+        let retrievedArray = JSON.parse(storedData);
+
+        retrievedArray.push(item);
+
+        // 更新数据
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(retrievedArray));
+      } else {
+        // 不存在存在 key
+
+        // 更新数据
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([item]));
+      }
+
+      ElMessage({
+        type: 'success',
+        message: `${t('Added successfully')}`,
+        duration: 1500,
+        showClose: true,
+      });
+
+      isSaveMethod.value = false;
+      newMethodName.value = '';
+      getData();
+    } else {
+      ElMessage({
+        type: 'error',
+        message: t('Program name already exis'),
+        duration: 1500,
+        showClose: true,
+      });
+    }
+  }
+
+  function cancelSave() {
+    isSaveMethod.value = false;
+    newMethodName.value = '';
+  }
+
+  function saveMethod() {
+    isSaveMethod.value = true;
+  }
 </script>
 
 <template>
@@ -279,6 +369,18 @@
     element-loading-text="加载中..."
   >
     <div class="button mt0">
+      <el-button
+        type="primary"
+        @click="saveMethod"
+      >
+        <Save
+          theme="outline"
+          size="16"
+          style="margin-right: 5px"
+        />
+        <span>保存当前视图字段方案</span>
+      </el-button>
+
       <el-button
         type="primary"
         @click="addView"
@@ -419,6 +521,7 @@
     </div>
   </div>
 
+  <!-- FIXME 新建数据表 -->
   <el-dialog
     v-model="isAddTable"
     :close-on-click-modal="false"
@@ -450,6 +553,40 @@
         <el-button
           type="info"
           @click="cancel"
+          >{{ $t('cancel') }}</el-button
+        >
+      </div>
+    </div>
+  </el-dialog>
+
+  <!-- FIXME 保存当前视图字段方案 -->
+  <el-dialog
+    v-model="isSaveMethod"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    @close="cancel"
+    title="保存当前视图字段方案"
+    width="75%"
+  >
+    <div class="addView">
+      <div class="addView-line">
+        <div class="addView-line-label addView-line-labelDialog">方案名字：</div>
+        <el-input
+          v-model="newMethodName"
+          placeholder="请输入方案名字"
+        />
+      </div>
+
+      <div>
+        <el-button
+          type="primary"
+          @click="confirmSave"
+          >{{ $t('confirm') }}</el-button
+        >
+
+        <el-button
+          type="info"
+          @click="cancelSave"
           >{{ $t('cancel') }}</el-button
         >
       </div>

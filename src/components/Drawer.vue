@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-28 23:03
+ * @LastTime   : 2024-01-30 23:38
  * @desc       : 抽屉
 -->
 
@@ -514,7 +514,7 @@
 
   .collapse {
     margin: 20px 0;
-    max-height: 60vh;
+    /* max-height: 60vh; */
     /* overflow: scroll; */
   }
 
