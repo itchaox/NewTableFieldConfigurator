@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-30 23:57
+ * @LastTime   : 2024-01-31 00:02
  * @desc       : 
 -->
 
@@ -388,7 +388,7 @@
           size="16"
           style="margin-right: 5px"
         />
-        <span>保存当前视图字段方案</span>
+        <span>{{ $t('Save Current View Field Scheme') }}</span>
       </el-button>
 
       <el-button
@@ -601,15 +601,15 @@
     :close-on-click-modal="false"
     :close-on-press-escape="false"
     @close="cancel"
-    title="保存当前视图字段方案"
+    :title="$t('Save Current View Field Scheme')"
     width="75%"
   >
     <div class="addView">
       <div class="addView-line">
-        <div class="addView-line-label addView-line-labelDialog">方案名字：</div>
+        <div class="addView-line-label addView-line-labelDialog">{{ $t('Program Name') }}</div>
         <el-input
           v-model="newMethodName"
-          placeholder="请输入方案名字"
+          :placeholder="$t('Please enter the name of the program')"
         />
       </div>
 
