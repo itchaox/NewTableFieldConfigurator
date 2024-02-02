@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-31 00:19
+ * @LastTime   : 2024-02-02 14:02
  * @desc       : 抽屉
 -->
 
@@ -13,6 +13,10 @@
   import FieldIcon from './fieldIcon.jsx';
   import { v4 as uuidv4 } from 'uuid';
   import { LOCAL_STORAGE_KEY } from '@/config/constant';
+
+  import { Drag, Lock } from '@icon-park/vue-next';
+
+  import { VueDraggable } from 'vue-draggable-plus';
 
   const base = bitable.base;
 
@@ -354,6 +358,8 @@
 
   // 折叠面板
   const collapse = ref('1');
+
+  const el = ref();
 </script>
 
 <template>
@@ -417,59 +423,90 @@
               >
             </template>
 
-            <div class="collapse-line-list">
+            <VueDraggable
+              ref="el"
+              v-model="filterList"
+              animation="150"
+              handle=".handle"
+              class="collapse-line-list"
+            >
+              <!-- <div class="collapse-line-list"> -->
               <div
                 class="collapse-line"
                 v-for="(item, index) in filterList"
                 :key="index"
               >
-                <!-- 字段名 -->
-                <el-select
-                  v-model="item.type"
-                  filterable
-                  style="width: 50%"
-                >
-                  <el-option
-                    v-for="(field, i) in index === 0 ? firstFilterFieldList : filterFieldList"
-                    :key="i"
-                    :label="$t(field.name)"
-                    :title="field.name"
-                    :value="field.type"
-                  >
-                    <field-icon :fieldType="field.type" />
-                    <span>
-                      {{ $t(field.name) }}
-                    </span>
-                  </el-option>
-                </el-select>
+                <div class="drag">
+                  <Lock
+                    title="索引列: 用来标识每条记录。不能被删除、移动或隐藏"
+                    class="lock"
+                    v-if="index === 0"
+                    theme="outline"
+                    size="16"
+                    fill="#333"
+                  />
 
-                <div class="collapse-line-other">
-                  <!-- 值 -->
-                  <div
-                    class="collapse-line-value"
-                    style="width: 100%"
+                  <Drag
+                    v-else
+                    class="handle cursor-move"
+                    theme="outline"
+                    size="16"
+                    fill="#656a72"
+                    strokeLinejoin="miter"
+                    strokeLinecap="butt"
+                  />
+
+                  <field-icon :fieldType="item.type" />
+
+                  <!-- 字段名 -->
+                  <el-select
+                    v-model="item.type"
+                    filterable
+                    style="width: 50%"
                   >
-                    <!-- TODO 输入框数据验重 -->
-                    <el-input
-                      v-model="item.name"
-                      :title="item.name"
-                      :placeholder="$t('Please enter a field name')"
+                    <el-option
+                      v-for="(field, i) in index === 0 ? firstFilterFieldList : filterFieldList"
+                      :key="i"
+                      :label="$t(field.name)"
+                      :title="field.name"
+                      :value="field.type"
+                    >
+                      <field-icon :fieldType="field.type" />
+                      <span>
+                        {{ $t(field.name) }}
+                      </span>
+                    </el-option>
+                  </el-select>
+
+                  <div class="collapse-line-other">
+                    <!-- 值 -->
+                    <div
+                      class="collapse-line-value"
+                      style="width: 100%"
+                    >
+                      <!-- TODO 输入框数据验重 -->
+                      <el-input
+                        v-model="item.name"
+                        :title="item.name"
+                        :placeholder="$t('Please enter a field name')"
+                      />
+                    </div>
+                    <div
+                      v-if="index === 0"
+                      class="btn-delete"
+                    ></div>
+                    <el-button
+                      v-else
+                      :icon="Close"
+                      class="collapse-delete"
+                      @click="() => filterList.splice(index, 1)"
+                      text
                     />
                   </div>
-                  <div
-                    v-if="index === 0"
-                    class="btn-delete"
-                  ></div>
-                  <el-button
-                    v-else
-                    :icon="Close"
-                    class="collapse-delete"
-                    @click="() => filterList.splice(index, 1)"
-                    text
-                  />
                 </div>
               </div>
-            </div>
+              <!-- </div> -->
+            </VueDraggable>
             <el-button
               text
               @click="addFilter"
@@ -544,6 +581,7 @@
     display: flex;
     flex-wrap: nowrap;
     justify-content: space-between;
+    align-items: center;
     margin-bottom: 10px;
   }
 
@@ -561,7 +599,7 @@
   }
 
   .btn-delete {
-    width: 25px;
+    width: 30px;
   }
 
   .collapse-delete {
@@ -593,5 +631,22 @@
     color: rgb(20, 86, 240);
     font-weight: 500;
     font-size: 18px;
+  }
+
+  .drag {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .handle,
+    .lock {
+      position: relative;
+      padding-top: 5px;
+      margin-right: 5px;
+    }
+  }
+
+  .cursor-move {
+    cursor: grab;
   }
 </style>

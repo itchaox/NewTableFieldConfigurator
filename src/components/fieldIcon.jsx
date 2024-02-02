@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-22 00:35
  * @LastAuthor : itchaox
- * @LastTime   : 2023-12-30 15:18
+ * @LastTime   : 2024-02-02 13:41
  * @desc       : 字段列表 icon
  */
 import { defineComponent } from 'vue';
@@ -56,7 +56,7 @@ export default defineComponent({
         {fieldType === 1 && (
           <TextStyleOne
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
           />
@@ -66,7 +66,7 @@ export default defineComponent({
         {fieldType === 3 && (
           <CheckOne
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
           />
@@ -76,7 +76,7 @@ export default defineComponent({
         {fieldType === 4 && (
           <ListCheckbox
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
             strokeLinecap='square'
@@ -87,7 +87,7 @@ export default defineComponent({
         {[11, 1003, 1004].includes(fieldType) && (
           <People
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
             strokeLinecap='square'
@@ -98,7 +98,7 @@ export default defineComponent({
         {fieldType === 23 && (
           <Peoples
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
             strokeLinecap='square'
@@ -109,7 +109,7 @@ export default defineComponent({
         {[5, 1001, 1002].includes(fieldType) && (
           <Calendar
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
             strokeLinecap='square'
@@ -120,7 +120,7 @@ export default defineComponent({
         {fieldType === 17 && (
           <Link
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
             strokeLinecap='butt'
@@ -131,7 +131,7 @@ export default defineComponent({
         {fieldType === 2 && (
           <Pound
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='bevel'
             strokeLinecap='butt'
@@ -142,7 +142,7 @@ export default defineComponent({
         {fieldType === 7 && (
           <CheckCorrect
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='miter'
             strokeLinecap='butt'
@@ -153,7 +153,7 @@ export default defineComponent({
         {fieldType === 15 && (
           <LinkThree
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
           />
         )}
@@ -162,7 +162,7 @@ export default defineComponent({
         {fieldType === 20 && (
           <Formula
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
           />
         )}
@@ -171,7 +171,7 @@ export default defineComponent({
         {fieldType === 19 && (
           <DocSearchTwo
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='miter'
           />
@@ -181,7 +181,7 @@ export default defineComponent({
         {fieldType === 1005 && (
           <OrderedList
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='miter'
           />
@@ -191,7 +191,7 @@ export default defineComponent({
         {fieldType === 18 && (
           <FileWithdrawalOne
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='miter'
           />
@@ -201,7 +201,7 @@ export default defineComponent({
         {fieldType === 99005 && (
           <EmailSuccessfully
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='miter'
           />
@@ -211,7 +211,7 @@ export default defineComponent({
         {fieldType === 13 && (
           <PhoneTelephone
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='miter'
           />
@@ -221,7 +221,7 @@ export default defineComponent({
         {fieldType === 22 && (
           <Local
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinejoin='miter'
           />
@@ -231,7 +231,7 @@ export default defineComponent({
         {fieldType === 99001 && (
           <PayCodeTwo
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
           />
         )}
@@ -240,7 +240,7 @@ export default defineComponent({
         {fieldType === 99002 && (
           <AlignmentVerticalLeft
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
             strokeLinecap='square'
           />
@@ -250,7 +250,7 @@ export default defineComponent({
         {fieldType === 99003 && (
           <Currency
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
           />
         )}
@@ -259,7 +259,7 @@ export default defineComponent({
         {fieldType === 99004 && (
           <Star
             theme='outline'
-            size='14'
+            size='15'
             style={iconStyle}
           />
         )}
