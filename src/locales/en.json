@@ -1,4 +1,8 @@
 {
+  "11": " 1. The program data is saved locally and can be used directly by opening the plug-in without being restricted by the data table.",
+  "22": "2. You can save the field information of the current view as a new scheme with one click by clicking the [Save Current View Field Scheme] button.",
+  "33": "3. The following field types cannot be saved: Find References, Processes, Buttons, Geolocation, Bidirectional Associations and Unidirectional Associations.The plugin automatically converts these field types to text when performing a one-click save",
+  "44": "4. Program information can be shared easily and quickly by exporting and importing programs",
   "title": "title",
   "Deleted successfully": "Deleted successfully",
   "Please select the option to delete": "Please select the option to delete!",
@@ -61,5 +65,13 @@
   "Save Current View Field Scheme": "Save Current View Field Program",
   "Please add a list of fields": "Please add a list of fields",
   "download method": "Download the program",
-  "upload Programs": "Import Program"
+  "upload Programs": "Import Program",
+  "More operational information": "More operational information",
+  "loading": "Loading...",
+  "File uploaded successfully": "File uploaded successfully",
+  "Only supports uploading JSON files": "Only supports uploading JSON files",
+  "drag": "Drag",
+  "or": "or",
+  "Click to upload a file": "Click to upload a file",
+  "idx": "Index Column: Used to identify each row.Cannot be deleted, moved or hidden"
 }

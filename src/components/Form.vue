@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-02-02 11:55
+ * @LastTime   : 2024-02-02 15:45
  * @desc       : 
 -->
 
@@ -402,7 +402,7 @@
     // 检查文件类型
     const isJSON = file.type === 'application/json';
     if (!isJSON) {
-      ElMessage.error('只能上传 JSON 文件');
+      ElMessage.error(t('Only supports uploading JSON files'));
     }
     return isJSON;
   }
@@ -428,7 +428,7 @@
       importMethod.value = JSON.parse(e.target.result as string);
       importMethodName.value = truncatedFileName;
 
-      ElMessage.success('文件上传成功');
+      ElMessage.success(t('File uploaded successfully'));
     };
 
     reader.readAsText(file[0].raw);
@@ -497,6 +497,8 @@
       });
     }
   }
+
+  const collapse = ref('0');
 </script>
 
 <template>
@@ -507,9 +509,51 @@
     <div class="tip-text">3. 点击"编辑"按钮，修改选定方案名称和字段列表</div>
   </div> -->
 
+  <el-collapse
+    v-model="collapse"
+    class="collapse"
+  >
+    <!-- FIXME 筛选 -->
+    <el-collapse-item name="1">
+      <template #title>
+        <el-icon class="mr5"><InfoFilled /></el-icon>
+        <span class="collapse-title">{{ $t('More operational information') }}</span>
+      </template>
+      <div
+        class="tip"
+        style="margin-bottom: 0"
+      >
+        <div
+          class="tip-text"
+          style="margin-bottom: 0"
+        >
+          {{ $t('11') }}
+        </div>
+        <div
+          class="tip-text"
+          style="margin-bottom: 0"
+        >
+          {{ $t('22') }}
+        </div>
+        <div
+          class="tip-text"
+          style="margin-bottom: 0"
+        >
+          {{ $t('33') }}
+        </div>
+        <div
+          class="tip-text"
+          style="margin-bottom: 0"
+        >
+          {{ $t('44') }}
+        </div>
+      </div>
+    </el-collapse-item>
+  </el-collapse>
+
   <div
     v-loading="loading"
-    element-loading-text="加载中..."
+    :element-loading-text="$t('loading')"
   >
     <div class="button mt0">
       <el-button
@@ -802,7 +846,9 @@
         :limit="1"
       >
         <el-icon class="el-icon--upload"><upload-filled /></el-icon>
-        <div class="el-upload__text"><em>拖拽</em> 或 <em>点击上传文件</em></div>
+        <div class="el-upload__text">
+          <em>{{ $t('drag') }}</em> {{ $t('or') }} <em>{{ $t('Click to upload a file') }}</em>
+        </div>
       </el-upload>
 
       <div class="addView-line">
@@ -919,5 +965,13 @@
 
   .el-divider--horizontal {
     margin: 10px 0;
+  }
+
+  .collapse {
+    margin-bottom: 14px;
+  }
+
+  .mr5 {
+    margin-right: 5px;
   }
 </style>

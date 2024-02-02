@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-02-02 14:02
+ * @LastTime   : 2024-02-02 15:46
  * @desc       : 抽屉
 -->
 
@@ -438,7 +438,7 @@
               >
                 <div class="drag">
                   <Lock
-                    title="索引列: 用来标识每条记录。不能被删除、移动或隐藏"
+                    :title="$t('idx')"
                     class="lock"
                     v-if="index === 0"
                     theme="outline"
