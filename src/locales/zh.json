@@ -61,5 +61,8 @@
   "No Data": "暂无数据",
   "Confirm deletion of the selected": "确认删除所选的 {0} 个方案吗?",
   "Save Current View Field Scheme": "保存当前视图字段方案",
-  "Please add a list of fields": "请添加字段列表"
+  "Please add a list of fields": "请添加字段列表",
+  "download method": "下载方案",
+  "upload Programs": "导入方案",
+  "import po": "导入方案"
 }

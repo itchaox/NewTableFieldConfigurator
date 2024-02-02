@@ -3,14 +3,14 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-01-31 00:02
+ * @LastTime   : 2024-02-02 11:55
  * @desc       : 
 -->
 
 <script setup lang="ts">
   import { bitable } from '@lark-base-open/js-sdk';
   import Drawer from './Drawer.vue';
-  import { InfoFilled } from '@element-plus/icons-vue';
+  import { InfoFilled, Upload } from '@element-plus/icons-vue';
 
   import { LOCAL_STORAGE_KEY } from '@/config/constant';
 
@@ -364,6 +364,139 @@
   function saveMethod() {
     isSaveMethod.value = true;
   }
+
+  // 下载 json 文件
+  function download(item) {
+    // 将数据转换为 JSON 格式
+    let jsonData = JSON.stringify(item, null, 2);
+
+    // 创建一个 Blob 对象
+    let blob = new Blob([jsonData], { type: 'application/json' });
+
+    // 创建一个链接
+    let url = URL.createObjectURL(blob);
+
+    // 创建一个链接元素
+    let a = document.createElement('a');
+    a.href = url;
+    a.download = `${item.name}`; // 文件名
+
+    // 模拟点击下载链接
+    a.click();
+
+    // 释放资源
+    URL.revokeObjectURL(url);
+  }
+
+  const isUpload = ref(false);
+  function upload() {
+    isUpload.value = true;
+  }
+
+  function cancelImport() {
+    isUpload.value = false;
+  }
+
+  // 上传之前的处理
+  function beforeUpload(file) {
+    // 检查文件类型
+    const isJSON = file.type === 'application/json';
+    if (!isJSON) {
+      ElMessage.error('只能上传 JSON 文件');
+    }
+    return isJSON;
+  }
+
+  const importMethod = ref();
+
+  const importMethodName = ref();
+
+  // 上传成功后的处理
+  function handleUploadSuccess(response, file) {
+    // 获取上传的文件名
+    const fileName = file[0].name;
+
+    // 截取以 .json 结尾的前面的数据
+    const lastIndex = fileName.lastIndexOf('.json');
+    const truncatedFileName = fileName.slice(0, lastIndex);
+
+    // 获取上传的 JSON 文件
+    const reader = new FileReader();
+
+    reader.onload = (e) => {
+      // 将文件内容解析为 JavaScript 对象
+      importMethod.value = JSON.parse(e.target.result as string);
+      importMethodName.value = truncatedFileName;
+
+      ElMessage.success('文件上传成功');
+    };
+
+    reader.readAsText(file[0].raw);
+  }
+
+  const uploadRef = ref();
+  async function confirmImport() {
+    if (!importMethodName.value) {
+      ElMessage({
+        type: 'error',
+        message: t('Please fill in the name of the program'),
+        duration: 1500,
+        showClose: true,
+      });
+      return;
+    }
+
+    const index = methodList.value.findIndex((item) => item.name === importMethodName.value);
+    if (index === -1) {
+      let item = {
+        // 处理 id
+        id: uuidv4(),
+        name: importMethodName.value,
+        list: importMethod.value.list,
+        lineNumber: importMethod.value.lineNumber,
+      };
+
+      // 检索存储的数据
+      const storedData = localStorage.getItem(LOCAL_STORAGE_KEY);
+
+      if (storedData) {
+        // 已存在 key
+        let retrievedArray = JSON.parse(storedData);
+
+        retrievedArray.push(item);
+
+        // 更新数据
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(retrievedArray));
+      } else {
+        // 不存在存在 key
+
+        // 更新数据
+        localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify([item]));
+      }
+
+      importMethodName.value = '';
+      importMethod.value = [];
+      isUpload.value = false;
+
+      ElMessage({
+        type: 'success',
+        message: `${t('Added successfully')}`,
+        duration: 1500,
+        showClose: true,
+      });
+
+      uploadRef.value.clearFiles();
+
+      getData();
+    } else {
+      ElMessage({
+        type: 'error',
+        message: t('Program name already exis'),
+        duration: 1500,
+        showClose: true,
+      });
+    }
+  }
 </script>
 
 <template>
@@ -390,7 +523,9 @@
         />
         <span>{{ $t('Save Current View Field Scheme') }}</span>
       </el-button>
+    </div>
 
+    <div class="button mt0">
       <el-button
         type="primary"
         @click="addView"
@@ -398,7 +533,17 @@
         <el-icon><Plus /></el-icon>
         <span>{{ $t('Additional Programs') }}</span>
       </el-button>
+
+      <el-button
+        type="info"
+        @click="upload"
+      >
+        <el-icon><Upload /></el-icon>
+        <span>{{ $t('upload Programs') }}</span>
+      </el-button>
     </div>
+
+    <el-divider />
 
     <div class="addView-line">
       <div class="addView-line-label">{{ $t('Program Name') }}</div>
@@ -444,8 +589,8 @@
         ref="tableRef"
         @selection-change="handleSelectionChange"
         :data="filterTableDataList"
-        height="100%"
         :empty-text="$t('No Data')"
+        max-height="55vh"
       >
         <el-table-column
           v-show="filterTableDataList?.length > 0"
@@ -453,10 +598,7 @@
           width="30"
         />
 
-        <el-table-column
-          :label="$t('Program name')"
-          :min-width="120"
-        >
+        <el-table-column :label="$t('Program name')">
           <template #default="scope">
             <div :title="scope.row.name">
               <div>{{ scope.row.name }}</div>
@@ -468,10 +610,20 @@
           property="name"
           :label="$t('operation')"
           align="center"
-          width="100"
         >
           <template #default="scope">
             <div class="operation">
+              <div
+                @click="download(scope.row)"
+                :title="$t('download method')"
+                style="color: rgb(20, 86, 240)"
+              >
+                <el-icon
+                  size="20"
+                  class="cursor"
+                  ><Download
+                /></el-icon>
+              </div>
               <div
                 @click="use(scope.row)"
                 :title="$t('Add Data Sheet')"
@@ -574,6 +726,7 @@
       <div class="addView-line">
         <div class="addView-line-label addView-line-labelDialog">{{ $t('data table name') }}</div>
         <el-input
+          clearable
           v-model="addTableName"
           :placeholder="$t('Please enter a data table name')"
         />
@@ -608,6 +761,7 @@
       <div class="addView-line">
         <div class="addView-line-label addView-line-labelDialog">{{ $t('Program Name') }}</div>
         <el-input
+          clearable
           v-model="newMethodName"
           :placeholder="$t('Please enter the name of the program')"
         />
@@ -623,6 +777,53 @@
         <el-button
           type="info"
           @click="cancelSave"
+          >{{ $t('cancel') }}</el-button
+        >
+      </div>
+    </div>
+  </el-dialog>
+
+  <!-- 导入方案 -->
+  <el-dialog
+    v-model="isUpload"
+    :close-on-click-modal="false"
+    :close-on-press-escape="false"
+    @close="cancelImport"
+    :title="$t('upload Programs')"
+    width="75%"
+  >
+    <div class="addView">
+      <el-upload
+        ref="uploadRef"
+        drag
+        :http-request="() => {}"
+        :on-change="handleUploadSuccess"
+        :before-upload="beforeUpload"
+        :limit="1"
+      >
+        <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+        <div class="el-upload__text"><em>拖拽</em> 或 <em>点击上传文件</em></div>
+      </el-upload>
+
+      <div class="addView-line">
+        <div class="addView-line-label addView-line-labelDialog">{{ $t('Program Name') }}</div>
+        <el-input
+          clearable
+          v-model="importMethodName"
+          :placeholder="$t('Please enter the name of the program')"
+        />
+      </div>
+
+      <div>
+        <el-button
+          type="primary"
+          @click="confirmImport"
+          >{{ $t('confirm') }}</el-button
+        >
+
+        <el-button
+          type="info"
+          @click="cancelImport"
           >{{ $t('cancel') }}</el-button
         >
       </div>
@@ -714,5 +915,9 @@
     font-size: 14px;
     height: 14px;
     line-height: 14px;
+  }
+
+  .el-divider--horizontal {
+    margin: 10px 0;
   }
 </style>
