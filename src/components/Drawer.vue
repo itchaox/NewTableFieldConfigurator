@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-03-07 00:44
+ * @LastTime   : 2024-03-07 00:57
  * @desc       : 抽屉
 -->
 
@@ -434,7 +434,7 @@
               <div
                 class="collapse-line"
                 v-for="(item, index) in filterList"
-                :key="index"
+                :key="index + Math.random()"
               >
                 <div class="drag">
                   <Lock
