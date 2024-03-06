@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-03-07 01:23
+ * @LastTime   : 2024-03-07 01:32
  * @desc       : 抽屉
 -->
 
@@ -464,6 +464,7 @@
                     >
                       <!-- TODO 输入框数据验重 -->
                       <el-input
+                        clearable
                         v-model="item.name"
                         :title="item.name"
                         :placeholder="$t('Please enter a field name')"
