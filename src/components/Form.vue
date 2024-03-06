@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-02-02 15:45
+ * @LastTime   : 2024-03-06 23:45
  * @desc       : 
 -->
 
@@ -578,10 +578,7 @@
         <span>{{ $t('Additional Programs') }}</span>
       </el-button>
 
-      <el-button
-        type="info"
-        @click="upload"
-      >
+      <el-button @click="upload">
         <el-icon><Upload /></el-icon>
         <span>{{ $t('upload Programs') }}</span>
       </el-button>
@@ -609,10 +606,7 @@
         <span>{{ $t('search') }}</span>
       </el-button>
 
-      <el-button
-        type="info"
-        @click="reset"
-      >
+      <el-button @click="reset">
         <el-icon><Refresh /></el-icon>
         <span>{{ $t('rs') }}</span>
       </el-button>
@@ -734,7 +728,6 @@
         @cancel="() => (popconfirmVisible = false)"
         :icon="InfoFilled"
         icon-color="rgb(20, 86, 240)"
-        cancel-button-type="info"
         :hide-after="50"
         :title="$t('Confirm deletion of the selected', [selectList.length])"
       >
@@ -783,11 +776,7 @@
           >{{ $t('confirm') }}</el-button
         >
 
-        <el-button
-          type="info"
-          @click="cancel"
-          >{{ $t('cancel') }}</el-button
-        >
+        <el-button @click="cancel">{{ $t('cancel') }}</el-button>
       </div>
     </div>
   </el-dialog>
@@ -818,11 +807,7 @@
           >{{ $t('confirm') }}</el-button
         >
 
-        <el-button
-          type="info"
-          @click="cancelSave"
-          >{{ $t('cancel') }}</el-button
-        >
+        <el-button @click="cancelSave">{{ $t('cancel') }}</el-button>
       </div>
     </div>
   </el-dialog>
@@ -867,11 +852,7 @@
           >{{ $t('confirm') }}</el-button
         >
 
-        <el-button
-          type="info"
-          @click="cancelImport"
-          >{{ $t('cancel') }}</el-button
-        >
+        <el-button @click="cancelImport">{{ $t('cancel') }}</el-button>
       </div>
     </div>
   </el-dialog>

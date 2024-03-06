@@ -532,11 +532,7 @@
             >{{ $t('confirm') }}</el-button
           >
 
-          <el-button
-            type="info"
-            @click="cancel"
-            >{{ $t('cancel') }}</el-button
-          >
+          <el-button @click="cancel">{{ $t('cancel') }}</el-button>
         </div>
       </div>
     </el-drawer>
