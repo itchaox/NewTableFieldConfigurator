@@ -33,7 +33,7 @@
   "Program name already exis": "方案名字已存在,请重新输入!",
   "Close": "关闭",
   "Configuring field information": "配置字段信息",
-  "Please enter a field name": "请输入字段名字",
+  "Please enter a field name": "请输入字段名",
   "Adding Fields": "添加字段",
   "Default number of rows": "默认行数：",
   "tta": "{0}成功",

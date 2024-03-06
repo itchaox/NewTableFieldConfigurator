@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-03-07 00:57
+ * @LastTime   : 2024-03-07 01:23
  * @desc       : 抽屉
 -->
 
@@ -434,7 +434,7 @@
               <div
                 class="collapse-line"
                 v-for="(item, index) in filterList"
-                :key="index + Math.random()"
+                :key="index"
               >
                 <div class="drag">
                   <Lock
@@ -456,7 +456,25 @@
                     strokeLinecap="butt"
                   />
 
-                  <field-icon :fieldType="item.type" />
+                  <div class="collapse-line-other">
+                    <!-- 值 -->
+                    <div
+                      class="collapse-line-value"
+                      style="width: 100%"
+                    >
+                      <!-- TODO 输入框数据验重 -->
+                      <el-input
+                        v-model="item.name"
+                        :title="item.name"
+                        :placeholder="$t('Please enter a field name')"
+                      />
+                    </div>
+                  </div>
+
+                  <field-icon
+                    :key="Math.random()"
+                    :fieldType="item.type"
+                  />
 
                   <!-- 字段名 -->
                   <el-select
@@ -478,19 +496,7 @@
                     </el-option>
                   </el-select>
 
-                  <div class="collapse-line-other">
-                    <!-- 值 -->
-                    <div
-                      class="collapse-line-value"
-                      style="width: 100%"
-                    >
-                      <!-- TODO 输入框数据验重 -->
-                      <el-input
-                        v-model="item.name"
-                        :title="item.name"
-                        :placeholder="$t('Please enter a field name')"
-                      />
-                    </div>
+                  <div>
                     <div
                       v-if="index === 0"
                       class="btn-delete"
@@ -590,6 +596,7 @@
   .collapse-line-other {
     display: flex;
     justify-content: flex-end;
+    margin-right: 5px;
   }
 
   .collapse-line-value {
