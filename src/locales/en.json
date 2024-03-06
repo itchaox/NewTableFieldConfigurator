@@ -73,5 +73,6 @@
   "drag": "Drag",
   "or": "or",
   "Click to upload a file": "Click to upload a file",
-  "idx": "Index Column: Used to identify each row.Cannot be deleted, moved or hidden"
+  "idx": "Index Column: Used to identify each row.Cannot be deleted, moved or hidden",
+  "tipt": "Tip: The default maximum number of rows is 20000"
 }

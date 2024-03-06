@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-03-07 00:33
+ * @LastTime   : 2024-03-07 00:44
  * @desc       : 抽屉
 -->
 
@@ -525,6 +525,8 @@
           />
         </div>
 
+        <div class="tip">{{ $t('tipt') }}</div>
+
         <div>
           <el-button
             type="primary"
@@ -620,7 +622,13 @@
   .default-line {
     display: flex;
     align-items: center;
+    margin-bottom: 8px;
+  }
+
+  .tip {
     margin-bottom: 24px;
+    font-size: 12px;
+    color: #8f959e;
   }
 
   .drawer-title {
