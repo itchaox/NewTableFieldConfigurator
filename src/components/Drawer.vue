@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-16 09:57
  * @LastAuthor : itchaox
- * @LastTime   : 2024-02-02 15:46
+ * @LastTime   : 2024-03-07 00:33
  * @desc       : 抽屉
 -->
 
@@ -521,7 +521,7 @@
           <el-input-number
             v-model="lineNumber"
             :min="1"
-            :max="1000"
+            :max="20000"
           />
         </div>
 

@@ -3,7 +3,7 @@
  * @Author     : itchaox
  * @Date       : 2023-12-23 09:34
  * @LastAuthor : itchaox
- * @LastTime   : 2024-03-06 23:45
+ * @LastTime   : 2024-03-07 00:36
  * @desc       : 
 -->
 
@@ -192,14 +192,17 @@
       });
 
       const table = await bitable.base.getTableById(tableId);
-      let _list = [];
-      for (let i = 0; i < activeItem.value.lineNumber; i++) {
-        _list.push({
-          fields: {},
-        });
-      }
 
-      await table.addRecords(_list);
+      // let _list = [];
+      // for (let i = 0; i < activeItem.value.lineNumber; i++) {
+      //   _list.push({
+      //     fields: {},
+      //   });
+      // }
+
+      // await table.addRecords(_list);
+
+      await processRecords(activeItem.value.lineNumber, tableId);
 
       const fieldIdList = await table.getFieldIdList();
       const field = await table.getFieldById(fieldIdList[0]);
@@ -241,6 +244,29 @@
         duration: 1500,
         showClose: true,
       });
+    }
+  }
+
+  async function processRecords(lineNumber, tableId) {
+    const table = await bitable.base.getTableById(tableId);
+
+    let _list = [];
+
+    // 计算需要调用 table.addRecords 的次数
+    const numberOfCalls = Math.ceil(lineNumber / 5000);
+
+    // 生成 _list
+    for (let i = 0; i < lineNumber; i++) {
+      _list.push({
+        fields: {},
+      });
+    }
+
+    // 调用 table.addRecords 相应次数
+    for (let i = 0; i < numberOfCalls; i++) {
+      const startIndex = i * 5000;
+      const endIndex = Math.min((i + 1) * 5000, lineNumber);
+      await table.addRecords(_list.slice(startIndex, endIndex));
     }
   }
 
